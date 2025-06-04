@@ -1,84 +1,67 @@
-// Объект с шутками по категориям
-const jokes = {
- "анекдоты": [
-     "— Доктор, у меня проблема: я забываю все, что было вчера. — Ну и что, это серьёзно? — Не знаю, я всё забыл.",
-     "Почему программисты любят кофе? Потому что он — Java.",
-     "Встречаются два программиста. Один говорит: 'Я — циклический', а второй отвечает: 'Я — бесконечный'."
- ],
- "игры слов": [
-     "Я люблю есть батарейки, потому что они заряжают мой день.",
-     "Почему книга по математике грустная? Потому что у неё много проблем.",
-     "Что делает компьютер в ванной? Водяное охлаждение."
- ],
- "стандартные": [
-     "Почему утки не делятся секретами? Потому что у них клюв закрыт.",
-     "Что сказали ноль девяти? Впечатляюще!",
-     "Почему велосипед не стоит? Потому что у него две шины."
- ]
-};
+// Когда DOM полностью загружен
+document.addEventListener('DOMContentLoaded', () => {
+  // Обработка кнопки "Узнать смешной факт" на главной странице
+  const funnyBtn = document.getElementById('funnyBtn');
+  if (funnyBtn) {
+    funnyBtn.addEventListener('click', () => {
+      // Массив шуток и фактов
+      const facts = [
+        "Почему программисты любят кофе? Потому что он помогает им оставаться в цикле!",
+        "Что делает разработчик, когда он скучает? Он переходит в режим отладки.",
+        "Почему тестировщики не любят рыбу? Потому что она всегда плавает в ошибках.",
+        "Как программист сверяет часы? Он использует setTimeout!"
+      ];
 
-// Функция получения случайной шутки из выбранной категории
-function getJokeByCategory(category) {
- if (jokes.hasOwnProperty(category)) {
-     const jokesArray = jokes[category];
-     const randomIndex = Math.floor(Math.random() * jokesArray.length);
-     return jokesArray[randomIndex];
- } else {
-     return "Выберите категорию для шутки.";
- }
-}
+      // Объект с картинками
+      const images = {
+        coffee: 'images/кофе.png',
+        bug: 'images/баг.png',
+        code: 'images/код.png'
+      };
 
-// Обработчик для кнопки "Показать шутку"
-document.getElementById('showJokeBtn').addEventListener('click', () => {
- alert("Добро пожаловать! Нажмите 'Получить шутку' для случайной шутки или выберите категорию.");
+      // Функция получения случайного элемента массива
+      function getRandom(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      // Вызов функции для получения случайной шутки
+      const joke = getRandom(facts);
+      alert(`Факт: ${joke}`);
+
+      // Выбор случайной картинки
+      const imageKeys = Object.keys(images);
+      const randomKey = getRandom(imageKeys);
+      const imgSrc = images[randomKey];
+
+      // Открываем новое окно с картинкой
+      const imgWindow = window.open();
+      imgWindow.document.write(`<h3>Посмотрите на это!</h3>`);
+      imgWindow.document.write(`<img src="${imgSrc}" alt="IT шутка" style="max-width:100%;height:auto;">`);
+    });
+  }
+
+  // Обработка кнопки "Добавить свою шутку" на странице шуток
+  const addJokeBtn = document.getElementById('addJokeBtn');
+  if (addJokeBtn) {
+    addJokeBtn.addEventListener('click', () => {
+      // Используем prompt для ввода новой шутки
+      const newJoke = prompt('Введите свою IT-шутку:');
+      if (newJoke && newJoke.trim() !== '') {
+        // Находим список шуток
+        const jokeList = document.getElementById('jokeList');
+        // Создаем новый элемент списка
+        const li = document.createElement('li');
+        li.textContent = newJoke;
+        // Добавляем в список
+        jokeList.appendChild(li);
+        // Подтверждение
+        alert('Ваша шутка добавлена!');
+      } else {
+        // Отмена или пустой ввод
+        alert('Шутка не добавлена.');
+      }
+    });
+  }
+
+  // Для страницы "О нас" можно добавить интерактивность по желанию
 });
-
-// Обработчик для кнопки "Получить шутку"
-document.getElementById('getJokeBtn').addEventListener('click', () => {
- const select = document.getElementById('categorySelect');
- const category = select.value;
-
- // Проверка выбранной категории
- if (category === "") {
-     if (confirm("Вы не выбрали категорию. Хотите услышать случайную шутку?")) {
-         const joke = getJokeByCategory('анекдоты'); // по умолчанию анекдоты
-         document.getElementById('jokeDisplay').textContent = joke;
-     } else {
-         alert("Пожалуйста, выберите категорию для получения шутки.");
-     }
- } else {
-     // Проверка наличия категории в объекте jokes
-     let categoryFound = false;
-     for (let key in jokes) {
-         if (key === category) {
-             categoryFound = true;
-             break;
-         }
-     }
-     if (categoryFound) {
-         const joke = getJokeByCategory(category);
-         document.getElementById('jokeDisplay').textContent = joke;
-     } else {
-         alert("Такой категории нет. Попробуйте выбрать другую.");
-     }
- }
-
- // Показываем количество шуток в выбранной категории
- const jokesCount = jokes[category] ? jokes[category].length : 0;
- alert(`В выбранной категории ${jokesCount} шуток(и).`);
-});
-
-// Функция приветствия пользователя
-function greetUser() {
- const name = prompt("Введите ваше имя:");
- if (name) {
-     alert(`Привет, ${name}! Готов посмеяться?`);
- } else {
-     alert("Вы не ввели имя.");
- }
-}
-
-// Вызов greetUser при загрузке страницы
-window.onload = () => {
- greetUser();
-};
