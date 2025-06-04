@@ -1,45 +1,42 @@
+<!-- HTML разметка главной страницы -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <title>Юмор на каждый день</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Юмор IT-компании</title>
+<!-- Подключение стилей -->
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <!-- Шапка сайта -->
-    <header>
-        <h1>Юмор на сайте</h1>
-        <button id="showJokeBtn">Показать шутку</button>
-    </header>
+<header>
+  <h1>Добро пожаловать в IT Юмор!</h1>
+  <nav>
+    <!-- Навигация по страницам -->
+    <a href="index.html">Главная</a>
+    <a href="about.html">О нас</a>
+    <a href="jokes.html">Шутки</a>
+  </nav>
+</header>
 
-    <!-- Основной контент -->
-    <main>
-        <section class="category-section">
-            <h2>Выберите категорию шуток:</h2>
-            <div class="category-controls">
-                <select id="categorySelect">
-                    <option value="">--Выберите категорию--</option>
-                    <option value="анекдоты">Анекдоты</option>
-                    <option value="игры слов">Игры слов</option>
-                    <option value="стандартные">Стандартные</option>
-                </select>
-                <button id="getJokeBtn">Получить шутку</button>
-            </div>
-        </section>
+<main>
+  <!-- Основной контент -->
+  <section>
+    <!-- Заголовок раздела -->
+    <h2>Почему разработчики любят синий?</h2>
+    <!-- Изображение с шуткой (оттенки синего) -->
+    <img src="images/синий_код.png" alt="Синий разработчик" />
+    <p>Потому что код в их жизни — это только оттенки синего! :)</p>
+    <!-- Кнопка для взаимодействия -->
+    <button id="funnyBtn">Узнать смешной факт</button>
+  </section>
+</main>
 
-        <section class="joke-display-section">
-            <h2>Случайная шутка:</h2>
-            <div class="joke-container">
-                <p id="jokeDisplay">Здесь появится шутка... или нет))</p>
-            </div>
-        </section>
-    </main>
+<footer>
+  <p>&copy; 2023 Юмор IT-компании</p>
+</footer>
 
-    <!-- Подвал сайта -->
-    <footer>
-        <p>&copy; 2023 Юмор на каждый день. Все права защищены.</p>
-    </footer>
-
-    <script src="script.js"></script>
+<!-- Подключение JS скриптов -->
+<script src="scripts.js"></script>
 </body>
 </html>
