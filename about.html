@@ -23,6 +23,21 @@
     <h2>Почему мы любим IT и юмор?</h2>
     <img src="images/юмор_в_офисе.png" alt="Юмор в офисе" />
     <p>Потому что хорошее настроение — залог продуктивной работы!</p>
+     <button id="hoverBtn">Наведи на меня, а я посчитаю!<br> Зачем? Да просто так))</button>
+    <p id="counter">Ты навёл курсор: 0 раз(а)</p>
+    <script>const hoverBtn = document.getElementById('hoverBtn');
+const counterDisplay = document.getElementById('counter');
+let count = 0;
+
+hoverBtn.addEventListener('mouseenter', () => {
+    count++;
+    counterDisplay.textContent = `Навёл курсор: ${count} раз(а)`;
+    console.log('Навели на данную кнопку');
+});
+
+hoverBtn.addEventListener('mouseleave', () => {
+    console.log('Наведения на кнопку больше нет');
+});</script>
   </section>
 </main>
 
