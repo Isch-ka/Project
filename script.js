@@ -316,7 +316,7 @@ function startLevel() {
   // Обновляем интерфейс: показываем информацию о текущем уровне, попытках и диапазоне
   gameStatusDiv.innerHTML = `
       <p>Уровень ${level} — приготовься, число ускользает!</p>
-      <p>Попыток осталось: ${maxAttempts}</p>
+      <p>Попыток осталось: ${maxAttempts - attempts}</p>
       <p>Загадано число от ${min} до ${max} — не дайте ему сбежать!</p>
       <button id="guessButton">Сделать попытку</button>
   `;
