@@ -271,6 +271,19 @@ function getRandom(arr) {
 Динамическое изменение содержимого страницы (добавление элементов).
 Открытие новых окон с контентом (картинки). */
 
+function checkChecked() {
+  const checkBox = document.getElementById("checkkk");
+  const error = document.getElementById("errorMes");
+ 
+ if (!checkBox.checked) {
+  error.textContent = "А чего галочкой не подтвердил, а?";
+ } else {
+  error.textContent = ""; // Если чекбокс выбран - убираем надпиь об ошибке
+   alert("Вот, другое дело! На тебя оформлен микрозайм, спасибо!");
+   alert("Шучу! Ты же сам сказал, что любишь юмор))");
+ }
+ }
+
 //JavaScript (game.js) — с системой уровней и очков:
 
 // Объявление переменных и получение элементов DOM
