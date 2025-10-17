@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Корзина товаров</title>
+<!-- Подключение стилей -->
+<link rel="stylesheet" href="style.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
@@ -131,6 +133,17 @@
 </style>
 </head>
 <body>
+
+    <header>
+  <h1>Наши товары</h1>
+  <nav>
+    <!-- Навигация по страницам -->
+    <a href="index.html">Главная</a>
+    <a href="about.html">О нас</a>
+    <a href="jokes.html">Ваши шутки</a>
+    <a href="game.html">Супер-игра</a>
+  </nav>
+</header>
 
 <div class="cart-box"></div>
 
@@ -316,6 +329,10 @@ function updateCart() {
   document.querySelector('.total-price').textContent = `Общая сумма: ${totalSum.toFixed(2)} руб.`;
 }
 </script>
+
+<footer>
+  <p>&copy; 2025 Юмор IT-компании</p>
+</footer>
 
 </body>
 </html>
