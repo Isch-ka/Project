@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Видеоплеер</title>
+
+<!-- Подключение стилей -->
+<link rel="stylesheet" href="style.css" />
+
+<style>
+
+body {
+  font-family: Arial, sans-serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.player {
+  background: #b7b9dd;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+video {
+  background: rgb(133, 206, 255);
+  border-radius: 4px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+  width: 640px;
+}
+
+button {
+  font-size: 20px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type=range] {
+  width: 150px;
+}
+#time {
+  min-width: 100px;
+  text-align: center;
+}
+
+button.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+button.icon-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+</style>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+  <h1>Видео</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="about.html">О нас</a>
+    <a href="jokes.html">Ваши шутки</a>
+    <a href="game.html">Супер-игра</a>
+    <a href="json.html">Товары</a>
+  </nav>
+</header>
+
+<div class="player">
+  <!-- Видео -->
+  <video id="video" width="640" height="360" src="images/видео.mp4" preload="metadata"></video>
+  
+  <!-- Контролы -->
+  <div class="controls">
+    <button id="play-pause" class="icon-btn">
+      <img src="images/play.png" alt="Play" />
+    </button>
+    
+    <!-- Прогресс бар -->
+    <input type="range" id="progress" min="0" max="100" value="0" step="0.1" />
+    
+    <!-- Время -->
+    <span id="time">00:00 / 00:00</span>
+    
+    <!-- Громкость -->
+    <input type="range" id="volume" min="0" max="1" step="0.01" value="1" />
+  </div>
+</div>
+
+<script>
+
+const video = document.getElementById('video');
+const progress = document.getElementById('progress');
+const timeDisplay = document.getElementById('time');
+const volumeSlider = document.getElementById('volume');
+const playPauseBtn = document.getElementById('play-pause');
+const playImg = 'images/play.png';   // путь к изображению play
+const pauseImg = 'images/pause.png'; // путь к изображению pause
+
+playPauseBtn.addEventListener('click', () => {
+  if (video.paused || video.ended) {
+    video.play();
+  } else {
+    video.pause();
+  }
+});
+
+video.addEventListener('play', () => {
+  playPauseBtn.querySelector('img').src = pauseImg;
+  playPauseBtn.querySelector('img').alt = 'Pause';
+});
+video.addEventListener('pause', () => {
+  playPauseBtn.querySelector('img').src = playImg;
+  playPauseBtn.querySelector('img').alt = 'Play';
+});
+
+// Обновление прогресс-бара
+video.addEventListener('timeupdate', () => {
+  const progressPercent = (video.currentTime / video.duration) * 100;
+  progress.value = progressPercent;
+
+  // Обновление времени
+  const currentMinutes = Math.floor(video.currentTime / 60);
+  const currentSeconds = Math.floor(video.currentTime % 60);
+  const durationMinutes = Math.floor(video.duration / 60);
+  const durationSeconds = Math.floor(video.duration % 60);
+  timeDisplay.textContent = 
+    `${pad(currentMinutes)}:${pad(currentSeconds)} / ${pad(durationMinutes)}:${pad(durationSeconds)}`;
+});
+
+// Функция для добавления нуля
+function pad(num) {
+  return num < 10 ? '0' + num : num;
+}
+
+// Перемотка видео при изменении прогресс-бара
+progress.addEventListener('input', () => {
+  const seekTime = (progress.value / 100) * video.duration;
+  video.currentTime = seekTime;
+});
+
+// Громкость
+volumeSlider.addEventListener('input', () => {
+  video.volume = volumeSlider.value;
+});
+
+// Инициализация
+video.volume = volumeSlider.value;
+
+</script>
+
+<footer>
+  <p>&copy; 2025 Юмор IT-компании</p>
+</footer>
+
+</body>
+</html>
