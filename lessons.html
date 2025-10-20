@@ -9,6 +9,34 @@
 </head>
 <body class="container my-4">
 
+    <style>
+        html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Контейнер внутри body, чтобы он растягивался */
+body > .container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Расширение блока с расписанием */
+#scheduleContainer {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+    </style>
+
     <header>
   <h1>Записаться на занятия</h1>
   <nav>
@@ -164,4 +192,5 @@
 </footer>
 
 </body>
+
 </html>
