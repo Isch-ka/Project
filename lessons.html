@@ -140,14 +140,14 @@ button.btn-secondary:hover:not(:disabled) {
   font-size: 1.2em;
   border-radius: 8px;
   border: none;
-  background-color: #43a047;
+  background-color: #003366; /* тёмно-синий цвет */
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
 
 .save-btn:hover {
-  background-color: #2e7d32;
+  background-color: #001f3f; /* чуть более тёмный при наведении */
   transform: scale(1.05);
 }
 
@@ -304,9 +304,9 @@ footer {
   // Можно добавить кнопку для сохранения
   // (или автоматически сохранять при каждом изменении)
   // Для простоты добавим кнопку
-  const saveButton = document.createElement('button');
-  saveButton.className = 'btn btn-success mb-4';
-  saveButton.textContent = 'Сохранить изменения';
+const saveButton = document.createElement('button');
+saveButton.className = 'save-btn mb-4';
+saveButton.textContent = 'Сохранить изменения';
   saveButton.onclick = () => {
     saveSchedule();
     alert('Изменения сохранены!');
@@ -322,7 +322,6 @@ footer {
 </body>
 
 </html>
-
 
 
 
