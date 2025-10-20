@@ -16,9 +16,16 @@
     box-sizing: border-box;
   }
 
-  body {
-    font-family: 'Lato', sans-serif;
-  }
+body {
+ font-family: 'Lato', sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
 
   .cart-box {
     padding: 20px;
@@ -268,7 +275,7 @@ function updateCart() {
 
     const infoEl = document.createElement('p');
     const sum = parseFloat(item.price) * item.quantity;
-    totalSum += sum;
+totalSum += sum;
     infoEl.textContent = `Price: ${item.price} × ${item.quantity} = ${sum.toFixed(2)}`;
 
     // Кнопка удаления
@@ -337,6 +344,7 @@ function updateCart() {
 
 </body>
 </html>
+
 
 
 
