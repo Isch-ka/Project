@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Занятия</title>
+<link rel="stylesheet" href="style.css" />
+<!-- Подключение Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container my-4">
+
+    <header>
+  <h1>Записаться на занятия</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="jokes.html">Ваши шутки</a>
+    <a href="game.html">Супер-игра</a>
+    <a href="json.html">Товары</a>
+    <a href="video.html">Видео</a>
+  </nav>
+</header>
+
+<h1 class="mb-4 text-center">Расписание занятий</h1>
+
+<div id="scheduleContainer" class="row gy-4"></div>
+
+<script>
+  // Исходные данные о занятиях
+  const initialSchedule = [
+    {
+      name: "Юморология",
+      time: "08:00 - 09:00",
+      maxParticipants: 10,
+      currentParticipants: 5,
+      userRegistered: false
+    },
+    {
+      name: "Внедрение юмора в сферу IT",
+      time: "10:00 - 11:00",
+      maxParticipants: 8,
+      currentParticipants: 8,
+      userRegistered: false
+    },
+    {
+      name: "Информационный юмор",
+      time: "18:00 - 19:00",
+      maxParticipants: 12,
+      currentParticipants: 7,
+      userRegistered: false
+    }
+  ];
+
+  let schedule = [];
+
+  const container = document.getElementById('scheduleContainer');
+
+  // Загрузка данных из localStorage или начальных данных
+  function loadSchedule() {
+    const data = localStorage.getItem('scheduleData');
+    if (data) {
+      schedule = JSON.parse(data);
+    } else {
+      schedule = JSON.parse(JSON.stringify(initialSchedule));
+    }
+    renderSchedule();
+  }
+
+  // Сохранение данных
+  function saveSchedule() {
+    localStorage.setItem('scheduleData', JSON.stringify(schedule));
+  }
+
+  // Отрисовка расписания
+  function renderSchedule() {
+    container.innerHTML = '';
+    schedule.forEach((lesson, index) => {
+      const col = document.createElement('div');
+      col.className = 'col-md-4';
+
+      const card = document.createElement('div');
+      card.className = 'card h-100';
+
+      const cardBody = document.createElement('div');
+      cardBody.className = 'card-body d-flex flex-column';
+
+      const title = document.createElement('h5');
+      title.className = 'card-title';
+      title.textContent = lesson.name;
+
+      const time = document.createElement('p');
+      time.className = 'card-text mb-1';
+      time.innerHTML = `<strong>Время:</strong> ${lesson.time}`;
+
+      const maxParticipants = document.createElement('p');
+      maxParticipants.className = 'card-text mb-1';
+      maxParticipants.innerHTML = `<strong>Максимум участников:</strong> ${lesson.maxParticipants}`;
+
+      const currentParticipants = document.createElement('p');
+      currentParticipants.className = 'card-text mb-3';
+      currentParticipants.innerHTML = `<strong>Записано участников:</strong> <span id="count-${index}">${lesson.currentParticipants}</span>`;
+
+      // Кнопки "Записаться" и "Отменить запись"
+      const btnGroup = document.createElement('div');
+      btnGroup.className = 'mt-auto d-flex gap-2';
+
+      const registerBtn = document.createElement('button');
+      registerBtn.className = 'btn btn-primary';
+      registerBtn.textContent = 'Записаться';
+      registerBtn.disabled = lesson.userRegistered || lesson.currentParticipants >= lesson.maxParticipants;
+      registerBtn.onclick = () => {
+        if (lesson.currentParticipants < lesson.maxParticipants && !lesson.userRegistered) {
+          lesson.currentParticipants++;
+          lesson.userRegistered = true;
+          renderSchedule();
+        }
+      };
+
+      const cancelBtn = document.createElement('button');
+      cancelBtn.className = 'btn btn-secondary';
+      cancelBtn.textContent = 'Отменить запись';
+      cancelBtn.disabled = !lesson.userRegistered;
+      cancelBtn.onclick = () => {
+        if (lesson.userRegistered && lesson.currentParticipants > 0) {
+          lesson.currentParticipants--;
+          lesson.userRegistered = false;
+          renderSchedule();
+        }
+      };
+
+      btnGroup.appendChild(registerBtn);
+      btnGroup.appendChild(cancelBtn);
+
+      cardBody.appendChild(title);
+      cardBody.appendChild(time);
+      cardBody.appendChild(maxParticipants);
+      cardBody.appendChild(currentParticipants);
+      cardBody.appendChild(btnGroup);
+
+      card.appendChild(cardBody);
+      col.appendChild(card);
+      container.appendChild(col);
+    });
+  }
+
+  // Инициализация
+  loadSchedule();
+
+  // Можно добавить кнопку для сохранения
+  // (или автоматически сохранять при каждом изменении)
+  // Для простоты добавим кнопку
+  const saveButton = document.createElement('button');
+  saveButton.className = 'btn btn-success mb-4';
+  saveButton.textContent = 'Сохранить изменения';
+  saveButton.onclick = () => {
+    saveSchedule();
+    alert('Изменения сохранены!');
+  };
+  document.body.insertBefore(saveButton, document.getElementById('scheduleContainer'));
+
+</script>
+
+<footer>
+  <p>&copy; 2025 Юмор IT-компании</p>
+</footer>
+
+</body>
+</html>
