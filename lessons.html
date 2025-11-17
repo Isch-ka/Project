@@ -3,165 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Занятия</title>
-
-<style>
-/* Общие стили для тела страницы */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #e0f7fa; /* светлый голубой фон */
-  color: #004d66; /* тёмно-синий для текста */
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Заголовки */
-h1 {
-  color: #006699;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Хедер и навигация */
-header {
-  background-color: #0288d1; /* насыщенный синий */
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Навигационные ссылки */
-nav a {
-  color: #ffffff;
-  margin: 0 15px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.1em;
-  transition: color 0.3s;
-}
-
-nav a:hover {
-  color: #ffd700; /* золотой при наведении */
-}
-
-/* Контейнер для расписания — размещение карточек в ряд с переносом */
-#scheduleContainer {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 0 15px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* промежутки между карточками */
-}
-
-/* Карточки занятий */
-.card {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 20px;
-  flex: 1 1 calc(33% - 40px);
-  display: flex;
-  flex-direction: column;
-  min-height: 250px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-
-/* Заголовки внутри карточек */
-.card-title {
-  margin-bottom: 15px;
-  color: #006699;
-  font-size: 1.25em;
-}
-
-/* Тексты внутри карточек */
-.card-text {
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
-
-/* Группировка кнопок внутри карточек */
-.btn-group {
-  display: flex;
-  gap: 10px;
-  margin-top: auto; /* чтобы кнопки были внизу карточки */
-}
-
-/* Стиль для кнопок */
-button {
-  padding: 12px 20px;
-  font-size: 1em;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  min-width: 120px;
-}
-
-/* Стиль для отключенных кнопок */
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Основная кнопка "Записаться" */
-button.btn-primary {
-  background-color: #039be5;
-  color: #fff;
-}
-
-button.btn-primary:hover:not(:disabled) {
-  background-color: #0277bd;
-  transform: scale(1.05);
-}
-
-/* Кнопка "Отменить запись" */
-button.btn-secondary {
-  background-color: #757575;
-  color: #fff;
-}
-
-button.btn-secondary:hover:not(:disabled) {
-  background-color: #505050;
-  transform: scale(1.05);
-}
-
-/* Кнопка сохранить */
-.save-btn {
-  display: block;
-  margin: 20px auto;
-  padding: 12px 30px;
-  font-size: 1.2em;
-  border-radius: 8px;
-  border: none;
-  background-color: #003366; /* тёмно-синий цвет */
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.save-btn:hover {
-  background-color: #001f3f; /* чуть более тёмный при наведении */
-  transform: scale(1.05);
-}
-
-/* Футер */
-footer {
-  background-color: #0288d1;
-  color: #fff;
-  text-align: center;
-  padding: 15px 10px;
-  margin-top: auto;
-  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-}
-</style>
-    
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body class="container my-4">
 
@@ -169,6 +11,7 @@ footer {
   <h1>Записаться на занятия</h1>
   <nav>
     <a href="index.html">Главная</a>
+    <a href="about.html">О нас</a>
     <a href="jokes.html">Ваши шутки</a>
     <a href="game.html">Супер-игра</a>
     <a href="json.html">Товары</a>
@@ -193,7 +36,7 @@ footer {
     {
       name: "Внедрение юмора в сферу IT",
       time: "10:00 - 11:00",
-      maxParticipants: 8,
+      maxParticipants: 20,
       currentParticipants: 8,
       userRegistered: false
     },
@@ -322,7 +165,3 @@ saveButton.textContent = 'Сохранить изменения';
 </body>
 
 </html>
-
-
-
-
