@@ -1,142 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Корзина товаров</title>
-<!-- Подключение стилей -->
 <link rel="stylesheet" href="style.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-body {
- font-family: 'Lato', sans-serif;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-footer {
-  margin-top: auto;
-}
-
-  .cart-box {
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .item {
-    width: 300px;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .item img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 12px;
-  }
-
-  .item h3 {
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
-
-  .item .price {
-    color: #ef5b5b;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-
-  .item .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .quantity-controls button {
-    padding: 4px 8px;
-    font-size: 16px;
-  }
-
-  .add-to-cart {
-    background-color: #5ba7ef;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-
-  /* Корзина */
-  .cart-section {
-    padding: 20px;
-    display: none;
-  }
-
-  .cart-section h2 {
-    margin-bottom: 20px;
-  }
-
-  .cart-item {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  .cart-item img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    margin-right: 12px;
-    border-radius: 4px;
-  }
-
-  .cart-item-details {
-    flex: 1;
-  }
-
-  .cart-item-details p {
-    margin-bottom: 4px;
-  }
-
-  .remove-btn {
-    background: transparent;
-    border: none;
-    color: #5befef;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
-  }
-
-  /* Итоговая цена */
-  .total-price {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 20px;
-    text-align: right;
-  }
-</style>
 </head>
 <body>
 
@@ -169,7 +37,13 @@ const cartItemsContainer = document.querySelector('.cart-items');
 const cartSection = document.querySelector('.cart-section');
 const totalPriceEl = document.querySelector('.total-price');
 
-const cartItems = []; // массив для хранения товаров в корзине
+const cartItems = [];
+
+// Функция для преобразования цены в число
+function parsePrice(priceString) {
+    // Убираем символ $ и пробелы, затем преобразуем в число
+    return parseFloat(priceString.replace('$', '').trim());
+}
 
 // Создаем блоки товаров для добавления
 data.forEach(element => {
@@ -184,7 +58,9 @@ data.forEach(element => {
 
   const itemPrice = document.createElement('div');
   itemPrice.className = 'price';
-  itemPrice.textContent = `Price: ${element.price}`;
+  const cleanPrice = parsePrice(element.price);
+  itemPrice.textContent = `Цена: ${element.price}`; // Оставляем оригинальное отображение
+  itemPrice.dataset.price = cleanPrice; // сохраняем чистую цену как число
 
   // Контроль количества
   const quantityControls = document.createElement('div');
@@ -224,6 +100,7 @@ data.forEach(element => {
       quantityInput.value = parseInt(quantityInput.value) - 1;
     }
   });
+  
   btnPlus.addEventListener('click', () => {
     quantityInput.value = parseInt(quantityInput.value) + 1;
   });
@@ -231,17 +108,21 @@ data.forEach(element => {
   // Обработчик добавления
   addButton.addEventListener('click', () => {
     const quantity = parseInt(quantityInput.value);
-    const existingIndex = cartItems.findIndex(ci => ci.id === element.id);
+    const price = parseFloat(itemPrice.dataset.price);
+    
+    // Ищем товар в корзине
+    const existingIndex = cartItems.findIndex(ci => ci.name === element.name);
+    
     if (existingIndex !== -1) {
       // Если товар уже есть, увеличиваем количество
       cartItems[existingIndex].quantity += quantity;
     } else {
       // Новый товар
       cartItems.push({
-        id: element.id,
+        id: element.name, // используем name как ID, так как в данных нет id
         name: element.name,
         url: element.url,
-        price: element.price,
+        price: price,
         quantity: quantity
       });
     }
@@ -253,14 +134,15 @@ function updateCart() {
   cartItemsContainer.innerHTML = '';
 
   if (cartItems.length === 0) {
-    document.querySelector('.cart-section').style.display = 'none';
+    cartSection.style.display = 'none';
     return;
   }
-  document.querySelector('.cart-section').style.display = 'block';
+  
+  cartSection.style.display = 'block';
 
   let totalSum = 0;
 
-  cartItems.forEach(item => {
+  cartItems.forEach((item, index) => {
     const cartItemEl = document.createElement('div');
     cartItemEl.className = 'cart-item';
 
@@ -274,9 +156,10 @@ function updateCart() {
     nameEl.textContent = item.name;
 
     const infoEl = document.createElement('p');
-    const sum = parseFloat(item.price) * item.quantity;
-totalSum += sum;
-    infoEl.textContent = `Price: ${item.price} × ${item.quantity} = ${sum.toFixed(2)}`;
+    const sum = item.price * item.quantity;
+    totalSum += sum;
+    
+    infoEl.textContent = `Цена: $${item.price} × ${item.quantity} = $${sum.toFixed(2)}`;
 
     // Кнопка удаления
     const removeBtn = document.createElement('button');
@@ -284,11 +167,8 @@ totalSum += sum;
     removeBtn.textContent = 'Удалить';
 
     removeBtn.addEventListener('click', () => {
-      const index = cartItems.findIndex(ci => ci.id === item.id);
-      if (index !== -1) {
-        cartItems.splice(index, 1);
-        updateCart();
-      }
+      cartItems.splice(index, 1);
+      updateCart();
     });
 
     // Обновление количества
@@ -296,17 +176,21 @@ totalSum += sum;
     quantityControl.style.display = 'flex';
     quantityControl.style.alignItems = 'center';
     quantityControl.style.marginTop = '4px';
+    quantityControl.style.justifyContent = 'center';
+    quantityControl.style.gap = '10px';
 
     const minusBtn = document.createElement('button');
     minusBtn.textContent = '-';
-    minusBtn.style.marginRight = '4px';
+    minusBtn.style.padding = '5px 10px';
 
     const qtySpan = document.createElement('span');
     qtySpan.textContent = `Кол-во: ${item.quantity}`;
+    qtySpan.style.minWidth = '80px';
+    qtySpan.style.textAlign = 'center';
 
     const plusBtn = document.createElement('button');
     plusBtn.textContent = '+';
-    plusBtn.style.marginLeft = '4px';
+    plusBtn.style.padding = '5px 10px';
 
     minusBtn.addEventListener('click', () => {
       if (item.quantity > 1) {
@@ -314,6 +198,7 @@ totalSum += sum;
         updateCart();
       }
     });
+    
     plusBtn.addEventListener('click', () => {
       item.quantity++;
       updateCart();
@@ -334,8 +219,11 @@ totalSum += sum;
     cartItemsContainer.appendChild(cartItemEl);
   });
 
-  document.querySelector('.total-price').textContent = `Общая сумма: ${totalSum.toFixed(2)} руб.`;
+  totalPriceEl.textContent = `Общая сумма: $${totalSum.toFixed(2)}`;
 }
+
+// Инициализация
+updateCart();
 </script>
 
 <footer>
@@ -344,7 +232,3 @@ totalSum += sum;
 
 </body>
 </html>
-
-
-
-
